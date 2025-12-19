@@ -1,22 +1,19 @@
 services:
   agents:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: crypto_agents_v2  # Changed name
+    build: .
+    container_name: crypto_agents_v2
     command: python3 main.py
     volumes:
-      - ./data:/app/data
+      - crypto_data:/app/data  # Use the named volume
 
   dashboard:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: crypto_dashboard_v2  # Changed name
-    # Change from 'dashboard/app.py' to './dashboard/app.py' or check the path
+    build: .
+    container_name: crypto_dashboard_v2
     command: python3 dashboard/app.py
-    working_dir: /app
     ports:
-      - "8051:8050"  # Changed host port to 8051 to avoid port conflict
+      - "8051:8050"
     volumes:
-      - ./data:/app/data
+      - crypto_data:/app/data  # Use the SAME named volume
+
+volumes:
+  crypto_data:  # Define the volume at the bottom
