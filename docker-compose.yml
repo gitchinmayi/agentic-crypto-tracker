@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: crypto_agents
+    container_name: crypto_agents_v2  # Changed name
     command: python3 main.py
     volumes:
       - ./data:/app/data
@@ -12,9 +12,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: crypto_dashboard
+    container_name: crypto_dashboard_v2  # Changed name
     command: python3 dashboard/app.py
     ports:
-      - "8050:8050"
+      - "8051:8050"  # Changed host port to 8051 to avoid port conflict
     volumes:
       - ./data:/app/data
