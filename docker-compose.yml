@@ -13,7 +13,9 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: crypto_dashboard_v2  # Changed name
+    # Change from 'dashboard/app.py' to './dashboard/app.py' or check the path
     command: python3 dashboard/app.py
+    working_dir: /app
     ports:
       - "8051:8050"  # Changed host port to 8051 to avoid port conflict
     volumes:

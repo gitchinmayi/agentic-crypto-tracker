@@ -1,0 +1,15 @@
+{
+    "timestamp": "2025-12-15T13:47:09.008669",
+    "prices": {
+        "bitcoin": {
+            "usd": 89488,
+            "prev_usd": 89488,
+            "percent_change_24h": 0.0
+        },
+        "ethereum": {
+            "usd": 3137.37,
+            "prev_usd": 3137.37,
+            "percent_change_24h": 0.0
+        }
+    }
+}
