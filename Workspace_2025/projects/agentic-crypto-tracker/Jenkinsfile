@@ -2,48 +2,43 @@ pipeline {
     agent any
 
     environment {
-        // This ensures our custom plugin directory is in the path for the shell
+        // Adds the location where we will download docker-compose to the system path
         PATH = "${HOME}/.docker/cli-plugins:${env.PATH}"
     }
 
     stages {
         stage('Setup Docker Compose') {
             steps {
-                echo 'Installing Docker Compose V2 Plugin...'
+                echo 'Installing Docker Compose V2 locally for this session...'
                 sh '''
                     mkdir -p ~/.docker/cli-plugins/
-                    # Download the latest stable Docker Compose binary
                     curl -SL https://github.com/docker/compose/releases/download/v2.26.1/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
                     chmod +x ~/.docker/cli-plugins/docker-compose
                 '''
-                // Verify the installation immediately
                 sh 'docker compose version'
             }
         }
 
         stage('Build Docker Images') {
             steps {
-                echo 'Building images for Agentic Crypto Tracker...'
-                // We use 'docker compose' (V2 syntax) now that it is installed
+                echo 'Building images...'
                 sh 'docker compose build'
             }
         }
 
         stage('Run Containers') {
             steps {
-                echo 'Starting application containers...'
-                sh 'docker compose up -d'
+                echo 'Starting application...'
+                // Use --force-recreate to ensure fresh containers
+                sh 'docker compose up -d --force-recreate'
                 sh 'docker compose ps'
             }
         }
     }
 
     post {
-        failure {
-            echo 'Pipeline failed. Check if the Docker daemon is running and Jenkins has permissions.'
-        }
-        success {
-            echo 'Crypto Tracker is now running!'
+        always {
+            echo 'Pipeline execution finished.'
         }
     }
 }
