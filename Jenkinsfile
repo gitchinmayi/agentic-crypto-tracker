@@ -21,11 +21,12 @@ pipeline {
 
         stage('Build Docker Images') {
             steps {
+                echo 'Checking workspace files...'
+                sh 'ls -la' // This is the most important debug line
                 echo 'Building images...'
-                sh 'docker compose build'
+                sh 'docker compose -f docker-compose.yml build'
             }
         }
-
         stage('Run Containers') {
             steps {
                 echo 'Starting application...'

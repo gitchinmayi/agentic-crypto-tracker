@@ -1,13 +1,17 @@
 services:
   agents:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: crypto_agents
     command: python3 main.py
     volumes:
       - ./data:/app/data
 
   dashboard:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: crypto_dashboard
     command: python3 dashboard/app.py
     ports:
