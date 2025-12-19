@@ -1,0 +1,16 @@
+services:
+  agents:
+    build: .
+    container_name: crypto_agents
+    command: python3 main.py
+    volumes:
+      - ./data:/app/data
+
+  dashboard:
+    build: .
+    container_name: crypto_dashboard
+    command: python3 dashboard/app.py
+    ports:
+      - "8050:8050"
+    volumes:
+      - ./data:/app/data"
